@@ -4,8 +4,8 @@
 void InitHeap(int *base, int n);
 void MakeHeap(int *base, int n);
 void HeapSort(int *base, int n);
-void ViewArr(int *arr, int n);
-int FindMaxIndex(int *base, int n, int now);
+void PrintInput(int *arr, int n);
+int GetMaxIndex(int *base, int n, int now);
 
 // 상수 값
 const int SIZE = 10; // 정렬데이터 크기
@@ -31,12 +31,12 @@ int main(void)
 {
     int arr[SIZE] = { 9,4,3,10,5,8,7,6,2,1 };
     printf("%s : ", "초기 배열 값 ");
-    ViewArr(arr, SIZE);
+    PrintInput(arr, SIZE);
 
     HeapSort(arr, SIZE);
 
     printf("%s : ", "정렬 후 배열 값 ");
-    ViewArr(arr, SIZE);
+    PrintInput(arr, SIZE);
     return 0;
 }
 
@@ -53,11 +53,11 @@ void HeapSort(int *base, int n)
     while (n > 1) // n이 끝에 갈 때 까지
     {
         MakeHeap(base, n); // 다시 힙 구조 만들고
-        // ViewArr(base, n + 1);
+        // PrintInput(base, n + 1);
         n--; // 마지막 값 떼고
         SWAP(base[0], base[n]); // 루트랑 바꾸고
     }
-    // ViewArr(base, n + 1);
+    // PrintInput(base, n + 1);
 }
 
 // 힙 구조 만들기
@@ -82,7 +82,7 @@ void InitHeap(int *base, int n)
                 break;
             }
         }
-        // ViewArr(base, i + 1); // 힙 구조 만드는 과정
+        // PrintInput(base, i + 1); // 힙 구조 만드는 과정
     }
 }
 
@@ -95,7 +95,7 @@ void MakeHeap(int *base, int n)
     //루트에 있는 요소를 힙 트리에 맞게 자리를 찾는 과정
     while ( LEFT_CHILD(now) < n)//왼쪽 자식이 있다면
     {
-        int max = FindMaxIndex(base, n, now);//now와 왼쪽, 오른쪽 자식 중에 큰 값의 위치 찾음
+        int max = GetMaxIndex(base, n, now);//now와 왼쪽, 오른쪽 자식 중에 큰 값의 위치 찾음
         if (max == now)//max와 now가 같으면
         {
             break;//자리를 찾은 것임
@@ -106,7 +106,7 @@ void MakeHeap(int *base, int n)
 }
 
 
-int FindMaxIndex(int *base, int n, int now)
+int GetMaxIndex(int *base, int n, int now)
 {
     int left_child = LEFT_CHILD(now);//왼쪽 자식
     int right_child = RIGHT_CHILD(now);//오른쪽 자식
@@ -125,7 +125,7 @@ int FindMaxIndex(int *base, int n, int now)
     }
     return left_child;
 }
-void ViewArr(int *arr, int n)
+void PrintInput(int *arr, int n)
 {
     for (int i = 0; i<n; i++)
     {
