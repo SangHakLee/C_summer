@@ -35,7 +35,7 @@ int main(void)
     0,0,4,1,0,
   };
 
-  int *F[2]; // 간선을 저장
+  int *F[2]; // 간선 저장
 
   F[0]=(int *)malloc(sizeof(int)*edge_count);
   F[1]=(int *)malloc(sizeof(int)*edge_count);
@@ -69,9 +69,9 @@ void Kruskal(int n, int *MST, int *F[2], int edge_count)
   Sort(MST, sortededge, edge_count); //간선 정렬
 
   printf("<Check kruskal is cyclic>\n");
-  //다음 간선을 이미 선택된 간선들의 집합에
-  //추가하때 사이클이 생성하는 지를 체크 하는것입니다.
 
+
+  //추가시 사이클이 확인
   for( i=0; i < edge_count; i++ )
   {
     e1=sortededge[0][i];
@@ -119,7 +119,7 @@ void Sort(int *MST,int *sortededge[2],int edge_count)
   int tmp;
 
   weight = (int *)malloc(sizeof(int)*edge_count);
-  //먼저 변을 구합니다.
+
   for( j=0; j<SIZE; j++)
   {
     for( k=j; k<SIZE; k++)
