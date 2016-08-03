@@ -5,7 +5,12 @@ void merge(int *num, int start,int mid,int end);
 void show(int *num, int size);
 void print(int *num );
 
-#define SWAP(a, b) ( int tmp; tmp = a; a = b; b = tmp; )
+void Swap(int *parm_a, int *parm_b)
+{
+    int ex = *parm_a;
+    *parm_a = *parm_b;
+    *parm_b = ex;
+}
 
 static int g = 0;
 const SIZE = 3;
@@ -51,7 +56,9 @@ void merge(int *num, int start,int mid,int end){
      print(num);
 
      if( num[i] > num[mid] ) {
-      //  SWAP( num[i], num[mid] );
+
+       Swap( &num[i], &num[mid] );
+
      }
      i++;
    }
