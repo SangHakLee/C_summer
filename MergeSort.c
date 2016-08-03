@@ -1,5 +1,7 @@
 #include<stdio.h>
 
+// http://proneer.tistory.com/entry/Sort-%ED%95%A9%EB%B3%91-%EC%A0%95%EB%A0%ACMerge-Sort
+
 void mergesort(int *num, int start,int end);
 void merge(int *num, int start,int mid,int end);
 void show(int *num, int size);
@@ -40,11 +42,20 @@ void mergesort(int *num,int start,int end){
 }
 
 void merge(int *num, int start,int mid,int end){
-  int i=start;
-  int j;
-  int k;
+  int i = start; // left
+  int j = mid+1;
+  int k = end;
 
-  while( i < end )
+  int tmp_i = 0;
+
+  int *tmp =(int*)malloc(sizeof(int)*(end-start+1));
+
+  printf("\n i : %d", i);
+  printf("\n j : %d", j);
+  printf("\n end : %d\n", end);
+
+  // 왼쪽 오른쪽 둘다
+  while( i <= j && j <= end ) // end = right
    {
      printf("####################");
      printf("\n G : %d", g++);
@@ -53,15 +64,22 @@ void merge(int *num, int start,int mid,int end){
      printf("\n end : %d", end);
      printf("\n####################\n");
 
-     print(num);
 
-     if( num[i] > num[mid] ) {
-
-       Swap( &num[i], &num[mid] );
-
+     if( num[i] < num[j] ) {
+       tmp[tmp_i] = num[i];
+       i++;
+     }else{
+       tmp[tmp_i] = num[j];
+       j++;
      }
-     i++;
+     tmp_i++;
+
+     print(num);
+    //  print(tmp);
+
    }
+
+   free(tmp);
 
 }
 
