@@ -1,58 +1,50 @@
 #include<stdio.h>
 
-// #define SWAP(a, b) (
-//   int tmp;
-//   tmp = a;
-//   a = b;
-//   b = tmp;
-// )
-
-void mergeSort(int *arr, int start, int end);
+void mergesort(int num[],int start,int end);
+void merge(int num[],int start,int mid,int end);
+void show(int num[],int size);
 
 
 
-int main(void)
-{
-  int arr[10] = {30,20,40,35,5,50,45,10,25,15};
-  int size = 10;
+int main(void){
 
-  mergeSort( arr, 0, size-1 );
+static int g = 0;
 
-  return 0;
+// int array[10]={30,20,40,35,5,50,45,10,25,15};
+int array[5]={10,8,6,5,4};
+int size=5;
+mergesort(array,0,size-1);
+
+
 }
-
-
-void mergeSort(int *arr, int start, int end)
-{
-  int mid = (start + end) / 2;
-  if( start < end ){
-    mergeSort( arr, start, mid );
-    mergeSort( arr, mid+1, end );
-
-    merge( arr, start, mid, end );
+void mergesort(int num[],int start,int end){
+  int mid=(start+end)/2;
+  if(start<end){
+    mergesort(num,start,mid);
+    mergesort(num,mid+1,end);
+    merge(num,start,mid,end);
+    //printf("start:%d\n",start);
+    //printf("mid:%d\n",mid);
+    //printf("end:%d\n",end);
 
   }
-
 }
 
-void merge( int *arr, int start, int mid, int end )
-{
-  int i, j;
+void merge(int num[],int start,int mid,int end){
+  int i=start;
+  int j;
+  int k;
 
-  i = start
-  // printf(arr)
   while( i < end )
-  {
-    printf("####################\n");
-    printf("\n start : %d", start);
-    printf("\n mid : %d", mid);
-    printf("\n end : %d", end);
-    printf("####################\n");
+   {
+     printf("####################");
+     printf("\n G : %d", g);
+     printf("\n start : %d", start);
+     printf("\n mid : %d", mid);
+     printf("\n end : %d", end);
+     printf("\n####################\n");
 
-    // if()
-    // {
-    //
-    // }
-    // swap
-  }
+     i++;
+   }
+
 }
