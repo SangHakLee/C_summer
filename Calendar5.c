@@ -1,30 +1,41 @@
 #include <stdio.h>
 int LeapYear(int a); // 윤년 계산
-void Calendar(int year);
+void Calendar(int year, int line);
 
 // http://prosto.tistory.com/5
 
+static int WEEK = 7;
+
+
+
 int main(void) {
   int year;
+  int line;
   while (1) {
     printf("yyyy ? : ");
     scanf("%d", & year);
-    Calendar(year);
+
+    printf("Line_of_Month ? ( ex) 2, 3, 4): ");
+    scanf("%d", & line);
+    // if( line !== 2 | line !== 3 | line !== 4){
+    //   printf("yyyy ? : ");
+    // }
+    Calendar(year, line);
   }
   return 0;
 }
 
-int LeapYear(int a) {
-  if ((0 == a % 4 && 0 != a % 100) || 0 == a % 400) {
+int LeapYear(int year) {
+  if ((0 == year % 4 && 0 != year % 100) || 0 == year % 400) {
     return 1; // 윤년
   }
   return 0; // 평년
 }
 
-void Calendar(int year) {
+void Calendar(int year, int line) {
   int i, j, m, l;
   int dayCnt, leapYearCnt = 0;
-  int lastMonth, thisMonth = 31;
+  int lastMonth, thisMonth;
   int month[12][6][7];
   int totalday[]={31,28,31,30,31,30,31,31,30,31,30,31};
 
@@ -42,41 +53,57 @@ void Calendar(int year) {
     }
 
     for (i = 0; i < 6; i++) {
-      for (j = 0; j < 7; j++) {
+      for (j = 0; j < WEEK; j++) {
         dayCnt++;
         month[m][i][j] = dayCnt - lastMonth;
         if (month[m][i][j] < 1 || month[m][i][j] > thisMonth)
           month[m][i][j] = 0;
+
       }
     }
+
     if ((m == 0) | (m == 2) | (m == 4) | (m == 6) | (m == 7) | (m == 9) | (m == 11)) {
-      lastMonth = (lastMonth + 31) % 7;
+      lastMonth = (lastMonth + 31) % WEEK;
     } else if ((m == 3) | (m == 5) | (m == 8) | (m == 10)) {
-      lastMonth = (lastMonth + 30) % 7;
+      lastMonth = (lastMonth + 30) % WEEK;
     } else if (m == 1) {
       if (LeapYear(year)) {
-        lastMonth = (lastMonth + 29) % 7;
+        lastMonth = (lastMonth + 29) % WEEK;
       } else {
-        lastMonth = (lastMonth + 28) % 7;
+        lastMonth = (lastMonth + 28) % WEEK;
       }
     }
+
   }
 
-  for (l = 0; l < 4; l++) //4번(3달씩)
+  int BASE = 12, LINE_OF_MONTH = line, LINE = BASE / LINE_OF_MONTH;
+
+
+  for (l = 0; l < LINE; l++) //4번(3달씩)
   {
-    printf("----------%d--------- \t---------%d--------- \t----------%d--------- \n", l * 3 + 1, l * 3 + 2, l * 3 + 3);
-    printf("Su Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \n");
+    switch (LINE_OF_MONTH) {
+      case 2: printf("----------%d--------- \t---------%d--------- \n", l * LINE_OF_MONTH + 1, l * LINE_OF_MONTH + 2);   printf("Su Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \n"); break;
+      case 3: printf("----------%d--------- \t---------%d--------- \t---------%d---------\n", l * LINE_OF_MONTH + 1, l * LINE_OF_MONTH + 2, l * LINE_OF_MONTH + 3);   printf("Su Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \n"); break;
+      case 4: printf("----------%d--------- \t---------%d--------- \t----------%d--------- \t----------%d---------\n", l * 4 + 1, l * 4 + 2, l * 4 + 3, l * 4 + 4); printf("Su Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa\n"); break;
+      default: break;
+    };
+    // printf("----------%d--------- \t---------%d--------- \t----------%d--------- \t----------%d---------\n", l * 4 + 1, l * 4 + 2, l * 4 + 3, l * 4 + 4);
+    // printf("Su Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa\n");
+
+    // printf("----------%d--------- \t---------%d--------- \n", l * LINE_OF_MONTH + 1, l * LINE_OF_MONTH + 2);
+    // printf("Su Mo Tu We Th Fr Sa \tSu Mo Tu We Th Fr Sa \n");
+
     for (m = 0; m < 6; m++) // 6번(한주를 여섯번)
     {
-      for (j = 0; j < 3; j++) //3달씩
+      for (j = 0; j < LINE_OF_MONTH; j++) //3달씩
       {
-        for (i = 0; i < 7; i++) //한주(하루 하루~)
+        for (i = 0; i < WEEK; i++) //한주(하루 하루~)
         {
-          if (month[(l * 3) + j][m][i] == 0) {
+          int s = (l * LINE_OF_MONTH) + j;
+          if (month[s][m][i] == 0) {
             printf("   ");
-            continue;
-          }
-          printf("%2d ", month[(l * 3) + j][m][i]);
+          }else
+            printf("%2d ", month[s][m][i]);
         }
         printf("\t");
       }
@@ -84,4 +111,5 @@ void Calendar(int year) {
     }
     printf("\n\n");
   }
+
 }
